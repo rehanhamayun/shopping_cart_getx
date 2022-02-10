@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shopping_cart_getx/controller/product_controller.dart';
+import 'package:shopping_cart_getx/view/total_amount.dart';
 
 class Homepage extends StatelessWidget {
   final productController = Get.put(ProductController());
@@ -20,7 +21,9 @@ class Homepage extends StatelessWidget {
                 primary: Colors.deepPurple,
                 elevation: 0.0,
               ),
-              onPressed: () {},
+              onPressed: () {
+                Get.to(() => TotalAmount());
+              },
               icon: Icon(Icons.shopping_cart),
               label: GetX<ProductController>(
                 builder: (controller) => Text(
@@ -113,11 +116,36 @@ class Homepage extends StatelessWidget {
                                             fontSize: 16),
                                       ),
                                       ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          primary: Colors.deepPurple,
+                                        ),
+                                        onPressed: () {
+                                          if (productController.totalPrice
+                                              .isGreaterThan(1)) {
+                                            Get.snackbar(
+                                                "${productController.productData[index].productName} has been removed ",
+                                                "");
+                                            productController.removeCart(
+                                                productController
+                                                    .productData[index]);
+                                          }
+                                          if (productController.totalPrice
+                                              .isEqual(0)) {
+                                            Get.snackbar(
+                                                "No Product to remove", "");
+                                          }
+                                          ;
+                                        },
+                                        child: Icon(Icons.remove),
+                                      ),
+                                      ElevatedButton(
                                         onPressed: () {
                                           Get.snackbar(
                                             "Product added",
                                             productController
                                                 .productData[index].productName,
+                                            snackPosition: SnackPosition.BOTTOM,
+                                            duration: Duration(seconds: 1),
                                           );
 
                                           productController.addtoCart(

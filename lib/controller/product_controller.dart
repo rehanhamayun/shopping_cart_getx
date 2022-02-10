@@ -13,6 +13,11 @@ class ProductController extends GetxController {
     cartItem.add(item);
   }
 
+  // remove from cart
+  removeCart(Product item) {
+    cartItem.remove(item);
+  }
+
   // Total Amount Controller
   double get totalPrice => cartItem.fold(0, (sum, item) => sum + item.price);
   int get count => cartItem.length;
