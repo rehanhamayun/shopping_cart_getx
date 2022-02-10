@@ -16,13 +16,18 @@ class Homepage extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(right: 20.0),
             child: ElevatedButton.icon(
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.deepPurple,
-                  elevation: 0.0,
+              style: ElevatedButton.styleFrom(
+                primary: Colors.deepPurple,
+                elevation: 0.0,
+              ),
+              onPressed: () {},
+              icon: Icon(Icons.shopping_cart),
+              label: GetX<ProductController>(
+                builder: (controller) => Text(
+                  productController.count.toString(),
                 ),
-                onPressed: () {},
-                icon: Icon(Icons.shopping_cart),
-                label: Text(productController.count.toString())),
+              ),
+            ),
           ),
         ],
       ),
@@ -33,10 +38,14 @@ class Homepage extends StatelessWidget {
           SizedBox(
             height: 40,
           ),
-          Text(
-            "Total Amount: ${productController.totalPrice.toString()} ",
-            style: TextStyle(
-                color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
+          GetX<ProductController>(
+            builder: (controller) => Text(
+              "Total Amount: ${productController.totalPrice.toString()} ",
+              style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold),
+            ),
           ),
           Expanded(
             child: GetBuilder<ProductController>(
@@ -105,6 +114,12 @@ class Homepage extends StatelessWidget {
                                       ),
                                       ElevatedButton(
                                         onPressed: () {
+                                          Get.snackbar(
+                                            "Product added",
+                                            productController
+                                                .productData[index].productName,
+                                          );
+
                                           productController.addtoCart(
                                               productController
                                                   .productData[index]);

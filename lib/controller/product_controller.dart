@@ -6,7 +6,7 @@ class ProductController extends GetxController {
   List<Product> productData = [];
 
 // Empty List used to store clicked add to cart values
-  List<Product> cartItem = [];
+  List<Product> cartItem = List<Product>.empty().obs;
 
 // Add to cart Controller
   addtoCart(Product item) {
@@ -24,7 +24,7 @@ class ProductController extends GetxController {
   }
 
   fetchProductData() async {
-    await Future.delayed(Duration(seconds: 5));
+    await Future.delayed(Duration(seconds: 1));
     List<Product> serverResponse = [
       Product(
         id: 1,
